@@ -14,9 +14,42 @@ int usage( char *name )
     return -1;
 }
 
+int print_result( void *ptr, Result res )
+{
+    switch( res.state )
+    {
+    case ResultState::Buzz3 :
+        cout << "Buzz";
+        break;
+    case ResultState::Fizz5 :
+        cout << "Fizz";
+        break;
+    case ResultState::Buzz3Fizz5 :
+        cout << "Buzz Fizz";
+        break;
+    case ResultState::BuzzFizzPrime :
+        cout << "BuzzFizz";
+        break;
+    case ResultState::Buzz3BuzzFizzPrime :
+        cout << "Buzz BuzzFizz";
+        break;
+    case ResultState::Fizz5BuzzFizzPrime :
+        cout << "Fizz BuzzFizz";
+        break;
+    case ResultState::Normal :
+        cout << res.Fn;
+        break;
+    }
+
+    cout << endl;
+
+    return 0;
+}
+
 int main( int argc, char *argv[] )
 {
     unsigned n = 0;
+    int err;
 
     if( argc != 2 )
     {
@@ -28,6 +61,13 @@ int main( int argc, char *argv[] )
     {
         ERR_OUT << "Out of range index" << endl;
         return usage( argv[0] );
+    }
+
+    err = buzzfizz( n, print_result, nullptr );
+    if( err )
+    {
+        ERR_OUT << "Failure." << endl;
+        return err;
     }
 
     return 0;
