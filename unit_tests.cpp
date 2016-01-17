@@ -46,7 +46,13 @@ int test_result( void *ptr, Result res )
 
     if( exp.Fn != res.Fn )
     {
-        cerr << "Failure." << endl;
+        cerr << "Wrong Fn." << endl;
+        return -1;
+    }
+
+    if( exp.state != res.state )
+    {
+        cerr << "Wrong State." << endl;
         return -1;
     }
 

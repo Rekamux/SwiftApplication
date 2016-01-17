@@ -6,7 +6,7 @@ namespace bf
 // Used types:  define the Fibonacci limit
 typedef unsigned IndexType;
 typedef unsigned long long Type;
-static const Type TYPE_MAX = ULLONG_MAX;
+static constexpr IndexType TYPE_BITS = sizeof( Type ) * CHAR_BIT;
 
 // State each Fn can be in
 enum class ResultState
@@ -40,7 +40,7 @@ typedef int (*ResultHandler)( void *ptr, Result );
 
 // Call the handler for each result until n.
 // Return 0 on success, -1 otherwise.
-int buzzfizz( int n, ResultHandler handler, void *ptr );
+int buzzfizz( IndexType n, ResultHandler handler, void *ptr );
 
 } // namespace bf
 
