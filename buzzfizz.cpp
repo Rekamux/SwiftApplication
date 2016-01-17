@@ -155,7 +155,7 @@ static bool addition_safe( Type a, Type b )
 {
     static constexpr Type mask = ((Type)1) << (TYPE_BITS - 1);
 
-    // It will overflow if the MSB of both is 1
+    // It will overflow if the MSBs of both are 1
     // or if one's MSB is 1 and the sum of the rest will set the MSB
     bool a_danger = a & mask;
     bool b_danger = b & mask;
