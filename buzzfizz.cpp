@@ -30,14 +30,31 @@ ostream &operator<<( ostream &o, Result r )
 
 int buzzfizz( int n, ResultHandler handler, void *ptr )
 {
+    Type Fn_prev = 0;
+    Type Fn = 0;
+
     for( int i = 0; i < n; i++ )
     {
-        Result res( i, i, ResultState::Normal );
-        int err = handler( ptr, res );
-
-        if( err )
+        if( i == 1 )
         {
-            return err;
+            Fn = 1;
+        }
+        else
+        {
+            Type tmp = Fn_prev;
+            Fn_prev = Fn;
+            Fn += tmp;
+        }
+        Result res( i, Fn, ResultState::Normal );
+
+        if( handler )
+        {
+            int err = handler( ptr, res );
+
+            if( err )
+            {
+                return err;
+            }
         }
     }
 

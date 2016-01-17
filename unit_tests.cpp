@@ -64,6 +64,8 @@ int main( int argc, char *argv[] )
         return err;
     }
 
+    cout << "Success!" << endl;
+
     return 0;
 }
 
