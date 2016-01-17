@@ -19,7 +19,7 @@ enum class ResultState
     Fizz5BuzzFizzPrime, // 5
     Normal,             // None of the above
 };
-const char *getResultStateCString( ResultState );
+std::ostream &operator<<( std::ostream &o, ResultState r );
 
 // Wrapper for each result
 struct Result
@@ -31,9 +31,11 @@ struct Result
     Result( IndexType n, Type Fn, ResultState state ) :
         n( n ), Fn( Fn ), state( state ) {}
 };
+std::ostream &operator<<( std::ostream &o, Result r );
 
 // Callback for each result
-typedef void (*ResultHandler)( void *ptr, Result );
+// Return 0 on success, -1 otherwise.
+typedef int (*ResultHandler)( void *ptr, Result );
 
 // Call the handler for each result until n.
 // Return 0 on success, -1 otherwise.
