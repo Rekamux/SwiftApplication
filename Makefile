@@ -1,5 +1,5 @@
 CC=g++
-CCFLAGS=-std=c++11 -Wall
+CCFLAGS=-std=c++11 -Wall -Werror
 RM=rm -fr
 MAIN_SRCS=main.cpp
 MAIN_OBJS=$(subst .cpp,.o,$(MAIN_SRCS))

@@ -1,7 +1,9 @@
 #include "buzzfizz.h"
 #include "utils.h"
+#include <iostream>
 
 using namespace bf;
+using namespace std;
 
 void test_result( void *ptr, Result res )
 {
@@ -30,6 +32,10 @@ void test_result( void *ptr, Result res )
         { 20, 6765, ResultState::Buzz3Fizz5 },
     };
     static constexpr int size = ARRAY_SIZE( expected );
+
+    if( res.n >= size ) return;
+    cout << res.n << " " << res.Fn << " " <<
+        getResultStateCString( res.state ) << endl;
 }
 
 int main( int argc, char *argv[] )

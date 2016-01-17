@@ -2,7 +2,7 @@
 
 using namespace bf;
 
-const char *getResultStateCString( ResultState state )
+const char *bf::getResultStateCString( ResultState state )
 {
     switch( state )
     {
