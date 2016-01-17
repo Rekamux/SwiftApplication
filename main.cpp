@@ -2,7 +2,7 @@
 #include "buzzfizz.h"
 
 using namespace std;
-using namespace fb;
+using namespace bf;
 
 #define DECIMAL_BASE 10
 #define ERR_OUT cerr
