@@ -29,8 +29,7 @@ ostream &operator<<( ostream &o, Result r )
     return o << "{ " << r.n << " " << r.Fn << " " << r.state << " }";
 }
 
-// Basic prime test.  Slow but failure-proof.
-static bool is_prime( Type Fn )
+bool is_prime( Type Fn )
 {
     Type sr = std::sqrt( Fn );
 
@@ -52,6 +51,8 @@ static void init_eratosthenes( IndexType n_max )
 {
     IndexType size = n_max + 1;
 
+    // Not released on purpose:  several executions of buzzfizz
+    // in the same process will benefit from it.
     eratosthenes = new bool[size];
     if( !eratosthenes )
     {
@@ -73,6 +74,8 @@ static bool is_Fn_prime( IndexType n_max, IndexType n, Type Fn )
 {
     bool n_prime, Fn_prime = true;
 
+    // Fn can get big, but not n.
+    // Use Eratosthenes on n to fasten the process.
     if( eratosthenes )
     {
         n_prime = !eratosthenes[n];

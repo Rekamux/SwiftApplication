@@ -9,7 +9,14 @@ using namespace bf;
 
 int usage( char *name )
 {
-    cerr << "Usage:  " << name << " last_index [-v]" << endl;
+    cerr << "Print one line per fibonacci element until." << endl
+         << "Will print:" << endl
+         << "- Buzz if Fn is divisible by 3" << endl
+         << "- Fizz if Fn is divisible by 5" << endl
+         << "- BuzzFizz if Fn is prime" << endl
+         << "If Fn matches several cases, they will be printed on the "
+            << "same line." << endl
+         << "Usage:  " << name << " last_index [-v]" << endl;
     return -1;
 }
 
@@ -48,7 +55,7 @@ int print_result( void *ptr, Result res )
 int print_verbose_result( void *ptr, Result res )
 {
     cout << res << endl;
-    return 0;
+    return print_result( ptr, res );
 }
 
 int main( int argc, char *argv[] )

@@ -1,5 +1,7 @@
 #include <climits>
 
+#define ARRAY_SIZE( array ) (sizeof(array) / sizeof(array[0]))
+
 namespace bf
 {
 
@@ -41,6 +43,9 @@ typedef int (*ResultHandler)( void *ptr, Result );
 // Call the handler for each result until n.
 // Return 0 on success, -1 otherwise.
 int buzzfizz( IndexType n, ResultHandler handler, void *ptr );
+
+// Basic prime test, O(sqrt(n)).
+bool is_prime( Type Fn );
 
 } // namespace bf
 
