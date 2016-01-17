@@ -26,7 +26,7 @@ ostream &operator<<( ostream &o, ResultState state )
 
 ostream &operator<<( ostream &o, Result r )
 {
-    return o << "{ " << r.n << " " << r.Fn << " " << r.state << "}";
+    return o << "{ " << r.n << " " << r.Fn << " " << r.state << " }";
 }
 
 // Basic prime test.  Slow but failure-proof.
@@ -34,7 +34,7 @@ static bool is_prime( Type Fn )
 {
     Type sr = std::sqrt( Fn );
 
-    for( Type i = 2; i < sr; i++ )
+    for( Type i = 2; i <= sr; i++ )
     {
         if( Fn % i == 0 )
         {
@@ -153,11 +153,18 @@ static ResultState get_state( IndexType n_max, IndexType n, Type Fn )
 
 static bool addition_safe( Type a, Type b )
 {
-    // It will overflow iff the MSB of both is 1
-    bool a_danger = a & (((Type)1) << (TYPE_BITS - 1));
-    bool b_danger = b & (((Type)1) << (TYPE_BITS - 1));
+    static constexpr Type mask = ((Type)1) << (TYPE_BITS - 1);
 
-    return !a_danger || !b_danger;
+    // It will overflow if the MSB of both is 1
+    // or if one's MSB is 1 and the sum of the rest will set the MSB
+    bool a_danger = a & mask;
+    bool b_danger = b & mask;
+    Type a_less_msb = a & ~mask;
+    Type b_less_msb = b & ~mask;
+    bool sum_danger = (a_less_msb + b_less_msb) & mask;
+
+    return (!a_danger && !b_danger) ||
+        ((a_danger || b_danger) && !sum_danger);
 }
 
 int buzzfizz( IndexType n_max, ResultHandler handler, void *ptr )
@@ -170,7 +177,7 @@ int buzzfizz( IndexType n_max, ResultHandler handler, void *ptr )
         init_eratosthenes( n_max );
     }
 
-    for( IndexType n = 0; n < n_max; n++ )
+    for( IndexType n = 0; n <= n_max; n++ )
     {
         if( n == 1 )
         {

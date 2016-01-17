@@ -10,7 +10,7 @@ using namespace bf;
 
 int usage( char *name )
 {
-    ERR_OUT << "Usage:  " << name << " last_index" << endl;
+    ERR_OUT << "Usage:  " << name << " last_index [-v]" << endl;
     return -1;
 }
 
@@ -46,12 +46,19 @@ int print_result( void *ptr, Result res )
     return 0;
 }
 
+int print_verbose_result( void *ptr, Result res )
+{
+    cout << res << endl;
+    return 0;
+}
+
 int main( int argc, char *argv[] )
 {
     unsigned n = 0;
     int err;
+    bool verbose = argc == 3;
 
-    if( argc != 2 )
+    if( argc != 2 && !verbose )
     {
         return usage( argv[0] );
     }
@@ -63,7 +70,14 @@ int main( int argc, char *argv[] )
         return usage( argv[0] );
     }
 
-    err = buzzfizz( n, print_result, nullptr );
+    if( verbose )
+    {
+        err = buzzfizz( n, print_verbose_result, nullptr );
+    }
+    else
+    {
+        err = buzzfizz( n, print_result, nullptr );
+    }
     if( err )
     {
         ERR_OUT << "Failure." << endl;
