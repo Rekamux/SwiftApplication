@@ -1,8 +1,9 @@
 #include "buzzfizz.h"
 
-using namespace bf;
+namespace bf
+{
 
-const char *bf::getResultStateCString( ResultState state )
+const char *getResultStateCString( ResultState state )
 {
     switch( state )
     {
@@ -17,4 +18,17 @@ const char *bf::getResultStateCString( ResultState state )
 
     return "Unknown";
 }
+
+int buzzfizz( int n, ResultHandler handler, void *ptr )
+{
+    for( int i = 0; i < n; i++ )
+    {
+        Result res( i, i, ResultState::Normal );
+        handler( ptr, res );
+    }
+
+    return 0;
+}
+
+} // namespace bf
 

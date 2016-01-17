@@ -37,7 +37,7 @@ typedef void (*ResultHandler)( void *ptr, Result );
 
 // Call the handler for each result until n.
 // Return 0 on success, -1 otherwise.
-int buzzfizz( int n, ResultHandler handler );
+int buzzfizz( int n, ResultHandler handler, void *ptr );
 
 } // namespace bf
 
