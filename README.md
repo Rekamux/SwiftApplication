@@ -16,9 +16,9 @@ and/or upload your code to GitHub.
 
 ## Build
 
-$ make
-$ ./unit_tests to run the tests
-$ ./main to run the main program
+- $ make
+- $ ./unit_tests to run the tests
+- $ ./main to run the main program
 
 ## Program
 
