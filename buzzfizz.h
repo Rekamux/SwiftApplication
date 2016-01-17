@@ -30,6 +30,7 @@ struct Result
 
     Result( IndexType n, Type Fn, ResultState state ) :
         n( n ), Fn( Fn ), state( state ) {}
+    Result() : n( 0 ), Fn( 0 ), state( ResultState::Normal ) {}
 };
 std::ostream &operator<<( std::ostream &o, Result r );
 

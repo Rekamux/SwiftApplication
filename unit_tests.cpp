@@ -35,11 +35,20 @@ static constexpr int expected_size = ARRAY_SIZE( expected );
 
 int test_result( void *ptr, Result res )
 {
+    Result exp;
+
     if( res.n >= expected_size ) return -1;
 
-    cout << "Expected: " << expected[res.n] << endl
+    exp = expected[res.n];
+    cout << "Expected: " << exp << endl
          << "Got:      " << res << endl
          << endl;
+
+    if( exp.Fn != res.Fn )
+    {
+        cerr << "Failure." << endl;
+        return -1;
+    }
 
     return 0;
 }
