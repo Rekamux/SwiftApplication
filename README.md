@@ -39,3 +39,4 @@ Usage:  ./main last_index [-v]
 
 - Use Big Integers to go beyond F93
 - Optimize Eratosthenes to use bits instead of bools
+- Add thread safety

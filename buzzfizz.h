@@ -1,3 +1,6 @@
+#ifndef BUZZFIZZ_H
+#define BUZZFIZZ_H
+
 #include <climits>
 
 #define ARRAY_SIZE( array ) (sizeof(array) / sizeof(array[0]))
@@ -49,3 +52,4 @@ bool is_prime( Type Fn );
 
 } // namespace bf
 
+#endif // BUZZFIZZ_H
