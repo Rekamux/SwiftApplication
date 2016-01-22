@@ -46,26 +46,47 @@ bool is_prime( Type Fn )
 
 // Index is false iff prime or not discovered yet
 static bool *eratosthenes = nullptr;
+static IndexType eratosthenes_size = 0;
 
 static void init_eratosthenes( IndexType n_max )
 {
     IndexType size = n_max + 1;
+    bool *new_e = nullptr;
+    IndexType element_size;
 
-    // Not released on purpose:  several executions of buzzfizz
-    // in the same process will benefit from it.
-    eratosthenes = new bool[size];
-    if( !eratosthenes )
+    if( size <= eratosthenes_size )
     {
-        cerr << "Cannot allocate eratosthenes, expect slowness." << endl;
         return;
     }
 
-    bzero( eratosthenes, size );
-
-    if( n_max >= 1 )
+    // Not released on purpose:  several executions of buzzfizz
+    // in the same process will benefit from it.
+    new_e = new bool[size];
+    if( !new_e )
     {
-        eratosthenes[0] = eratosthenes[1] = true;
+        return;
     }
+
+    element_size = sizeof( new_e[0] );
+
+    if( eratosthenes )
+    {
+        memcpy( new_e, eratosthenes, eratosthenes_size * element_size );
+        bzero( new_e + eratosthenes_size,
+            (size - eratosthenes_size) * element_size );
+        delete eratosthenes;
+    }
+    else
+    {
+        bzero( new_e, size * element_size );
+
+        if( n_max >= 1 )
+        {
+            new_e[0] = new_e[1] = true;
+        }
+    }
+    eratosthenes = new_e;
+    eratosthenes_size = size;
 }
 
 // Slightly better optimized:  use the divisability property of Fibonacci
@@ -76,13 +97,13 @@ static bool is_Fn_prime( IndexType n_max, IndexType n, Type Fn )
 
     // Fn can get big, but not n.
     // Use Eratosthenes on n to fasten the process.
-    if( eratosthenes )
+    if( eratosthenes && n < eratosthenes_size )
     {
         n_prime = !eratosthenes[n];
 
         if( n_prime )
         {
-            for( IndexType i = n + n; i <= n_max; i += n )
+            for( IndexType i = n + n; i < eratosthenes_size; i += n )
             {
                 eratosthenes[i] = true;
             }
@@ -175,10 +196,7 @@ int buzzfizz( IndexType n_max, ResultHandler handler, void *ptr )
     Type Fn_prev = 0;
     Type Fn = 0;
 
-    if( !eratosthenes )
-    {
-        init_eratosthenes( n_max );
-    }
+    init_eratosthenes( n_max );
 
     for( IndexType n = 0; n <= n_max; n++ )
     {
