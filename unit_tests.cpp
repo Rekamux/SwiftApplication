@@ -87,15 +87,14 @@ int test_result( void *ptr, Result res )
     LastFibonacci *last = (LastFibonacci *)ptr;
     int err = 0;
 
-    if( !ptr )
-    {
-        cerr << "Null ptr passed." << endl;
-        return -1;
-    }
-
     if( res.n < expected_size )
     {
         exp = expected[res.n];
+    }
+    else if( !last )
+    {
+        cerr << "Null ptr passed." << endl;
+        return -1;
     }
     else
     {
@@ -134,6 +133,14 @@ int main( int argc, char *argv[] )
 {
     int err;
     LastFibonacci last;
+
+    cout << "Testing the few firsts..." << endl;
+    err = buzzfizz( expected_size - 1, test_result, nullptr );
+    if( err )
+    {
+        cerr << "Unit tests failed." << endl;
+        return err;
+    }
 
     last.pp = expected[expected_size-2].Fn;
     last.p = expected[expected_size-1].Fn;
